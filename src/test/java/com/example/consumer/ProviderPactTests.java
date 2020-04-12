@@ -6,6 +6,7 @@ import au.com.dius.pact.consumer.PactVerification;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.model.RequestResponsePact;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.assertj.core.api.Assertions;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 import static io.pactfoundation.consumer.dsl.LambdaDsl.newJsonArray;
 import static io.pactfoundation.consumer.dsl.LambdaDsl.newJsonArrayMinLike;
@@ -40,7 +43,8 @@ public class ProviderPactTests {
                 .status(200)
                 .body(newJsonArrayMinLike(1, (o) -> o.object((o1) -> {
                     o1.numberType("id");
-                    o1.stringType("name");
+                    o1.stringType("first");
+                    o1.stringType("last");
                     o1.numberType("age");
                     o1.array("likes", (o2) -> o2.stringType("running"));
                 })).build())
@@ -53,7 +57,9 @@ public class ProviderPactTests {
     @PactVerification(fragment = "pactProvider")
     @Test
     public void provider() throws JsonProcessingException {
-        client.processPeople();
+        List<String> names = client.processPeople();
+        Assertions.assertThat(names).isNotEmpty();
+        Assertions.assertThat(names.iterator().next()).isNotEmpty();
     }
 
 }

@@ -39,7 +39,7 @@ public class ProviderMockedTests {
 
     @Test
     public void processPeople() throws JsonProcessingException {
-        List<Person> people = Stream.of(new Person(1, "first last", 39, null))
+        List<Person> people = Stream.of(new Person(1, "first", "last", 39, null))
                 .collect(Collectors.toList());
 
         stubFor(get(urlPathEqualTo("/people"))

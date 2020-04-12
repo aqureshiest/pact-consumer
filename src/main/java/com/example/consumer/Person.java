@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Person {
     int id;
-    String name;
+    String first;
+    String last;
     int age;
     String[] likes;
 }
