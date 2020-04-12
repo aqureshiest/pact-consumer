@@ -60,6 +60,14 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>au.com.dius</groupId>
+				<artifactId>pact-jvm-provider-maven</artifactId>
+				<version>4.0.0</version>
+				<configuration>
+					<pactBrokerUrl>http://localhost</pactBrokerUrl>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
