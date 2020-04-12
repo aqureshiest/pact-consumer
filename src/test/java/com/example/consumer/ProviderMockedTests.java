@@ -35,10 +35,10 @@ public class ProviderMockedTests {
     int port;
 
     @Autowired
-    ProviderClient client;
+    ProviderClient provider;
 
     @Test
-    public void processPeople() throws JsonProcessingException {
+    public void get_people_from_provider() throws JsonProcessingException {
         List<Person> people = Stream.of(new Person(1, "first last", 39, null))
                 .collect(Collectors.toList());
 
@@ -48,7 +48,6 @@ public class ProviderMockedTests {
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                         .withBody(mapper.writeValueAsString(people))));
 
-        client.processPeople();
+        provider.getPeople();
     }
-
 }
