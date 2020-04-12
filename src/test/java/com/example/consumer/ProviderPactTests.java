@@ -18,8 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-import static io.pactfoundation.consumer.dsl.LambdaDsl.newJsonArray;
-import static io.pactfoundation.consumer.dsl.LambdaDsl.newJsonArrayMinLike;
+import static io.pactfoundation.consumer.dsl.LambdaDsl.*;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -51,15 +50,34 @@ public class ProviderPactTests {
                 .toPact();
     }
 
+    @Pact(consumer = "consumer", state = "test user exists")
+    public RequestResponsePact pactProviderWithTestUser(PactDslWithProvider builder) {
+        return builder
+                .given("test user exists")
+                .uponReceiving("request for specific person with id")
+                .path("/people/0")
+                .method("GET")
+                .willRespondWith()
+                .status(200)
+                .body("{\"id\": 0, \"first\": \"test\", \"last\": \"user\", \"age\": 30}", "application/json")
+                .toPact();
+    }
+
     @Autowired
     ProviderClient client;
 
     @PactVerification(fragment = "pactProvider")
     @Test
-    public void provider() throws JsonProcessingException {
+    public void get_people() throws JsonProcessingException {
         List<String> names = client.processPeople();
         Assertions.assertThat(names).isNotEmpty();
         Assertions.assertThat(names.iterator().next()).isNotEmpty();
     }
 
+    @PactVerification(fragment = "pactProviderWithTestUser")
+    @Test
+    public void get_person() throws JsonProcessingException {
+        String name = client.processPerson(0);
+        Assertions.assertThat(name).isNotEmpty();
+    }
 }

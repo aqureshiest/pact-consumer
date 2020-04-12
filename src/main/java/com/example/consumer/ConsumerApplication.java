@@ -51,5 +51,10 @@ class ProviderClient {
                 .map(p -> p.getFirst() + " " + p.getLast())
                 .collect(Collectors.toList());
     }
+
+    public String processPerson(int id) {
+        Person p = restTemplate.getForObject(providerUrl + "/people/" + id, Person.class);
+        return p.getFirst() + " " + p.getLast();
+    }
 }
 
