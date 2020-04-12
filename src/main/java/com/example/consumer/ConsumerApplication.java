@@ -48,13 +48,13 @@ class ProviderClient {
     public List<String> processPeople() {
         Person[] people = restTemplate.getForObject(providerUrl + "/people", Person[].class);
         return Stream.of(people)
-                .map(p -> p.getFirst() + " " + p.getLast())
+                .map(p -> p.getName())
                 .collect(Collectors.toList());
     }
 
     public String processPerson(int id) {
         Person p = restTemplate.getForObject(providerUrl + "/people/" + id, Person.class);
-        return p.getFirst() + " " + p.getLast();
+        return p.getName();
     }
 }
 

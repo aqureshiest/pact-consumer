@@ -41,11 +41,9 @@ public class ProviderPactTests {
                 .willRespondWith()
                 .status(200)
                 .body(newJsonArrayMinLike(1, (o) -> o.object((o1) -> {
-                    o1.numberType("id");
-                    o1.stringType("first");
-                    o1.stringType("last");
+                    o1.stringType("name");
                     o1.numberType("age");
-                    o1.array("likes", (o2) -> o2.stringType("running"));
+                    o1.stringType("likes", "a,b,c");
                 })).build())
                 .toPact();
     }
@@ -59,7 +57,7 @@ public class ProviderPactTests {
                 .method("GET")
                 .willRespondWith()
                 .status(200)
-                .body("{\"id\": 0, \"first\": \"test\", \"last\": \"user\", \"age\": 30}", "application/json")
+                .body("{\"name\": \"test user\", \"age\": 30}", "application/json")
                 .toPact();
     }
 

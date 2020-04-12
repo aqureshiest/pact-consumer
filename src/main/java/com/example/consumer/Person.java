@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Person {
-    int id;
-    String first;
-    String last;
+    String name;
     int age;
-    String[] likes;
+    String likes;
 }
