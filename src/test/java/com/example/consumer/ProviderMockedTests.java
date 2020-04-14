@@ -48,7 +48,7 @@ public class ProviderMockedTests {
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                         .withBody(mapper.writeValueAsString(people))));
 
-        client.processPeople();
+        client.getPeople();
     }
 
 }

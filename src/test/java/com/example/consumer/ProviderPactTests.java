@@ -15,7 +15,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
-import static io.pactfoundation.consumer.dsl.LambdaDsl.newJsonArray;
 import static io.pactfoundation.consumer.dsl.LambdaDsl.newJsonArrayMinLike;
 
 @ActiveProfiles("test")
@@ -32,7 +31,7 @@ public class ProviderPactTests {
     @Pact(consumer = "consumer")
     public RequestResponsePact pactProvider(PactDslWithProvider builder) {
         return builder
-                .given("has people")
+                .given("provider has people loaded in db")
                 .uponReceiving("request for people list")
                 .path("/people")
                 .method("GET")
@@ -48,12 +47,12 @@ public class ProviderPactTests {
     }
 
     @Autowired
-    ProviderClient client;
+    ProviderClient provider;
 
     @PactVerification(fragment = "pactProvider")
     @Test
     public void provider() throws JsonProcessingException {
-        client.processPeople();
+        provider.getPeople();
     }
 
 }

@@ -1,8 +1,5 @@
 package com.example.consumer;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -30,7 +27,7 @@ public class ConsumerApplication {
     @Bean
     ApplicationRunner init(ProviderClient client) {
         return args -> {
-            client.processPeople();
+            client.getPeople();
         };
     }
 }
@@ -46,7 +43,7 @@ class ProviderClient {
         this.providerUrl = server;
     }
 
-    public void processPeople() {
+    public void getPeople() {
         Person[] people = restTemplate.getForObject(providerUrl + "/people", Person[].class);
         Stream.of(people).forEach(p -> System.out.println(p.getName()));
     }
