@@ -35,7 +35,7 @@ public class ProviderPactTests {
     @Pact(consumer = "consumer")
     public RequestResponsePact pactProvider(PactDslWithProvider builder) {
         return builder
-                .given("has people")
+                .given("provider has people loaded in db")
                 .uponReceiving("request for people list")
                 .path("/people")
                 .method("GET")
