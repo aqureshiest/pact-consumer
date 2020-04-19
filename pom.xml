@@ -66,6 +66,10 @@
 				<version>4.0.0</version>
 				<configuration>
 					<pactBrokerUrl>http://localhost</pactBrokerUrl>
+					<projectVersion>${pact.consumer.version}</projectVersion>
+					<tags>
+						<tag>${pact.tag}</tag>
+					</tags>
 				</configuration>
 			</plugin>
 		</plugins>
